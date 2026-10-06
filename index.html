@@ -13,8 +13,6 @@
       --pink-neon: #ff63d8;
       --red-neon: #ff3366;
       --gold-neon: #ffd700;
-      --glass-bg: rgba(10, 25, 68, 0.62);
-      --glass-border: rgba(48, 246, 255, 0.55);
     }
 
     * {
@@ -35,7 +33,7 @@
       align-items: center;
       justify-content: center;
       padding: 12px;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     .game-wrapper {
@@ -43,135 +41,21 @@
       max-width: 1120px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-
-    /* TOP HEADER & HUD */
-    .top-bar {
-      display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 20px;
-      background: rgba(6, 19, 59, 0.78);
-      border: 1.5px solid rgba(48, 246, 255, 0.4);
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(48, 246, 255, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      justify-content: center;
     }
 
-    .brand-box {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .game-title {
-      font-size: clamp(1.25rem, 2.5vw, 1.7rem);
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #30f6ff 0%, #baff3c 50%, #ff63d8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba(48, 246, 255, 0.45));
-    }
-
-    .game-subtitle {
-      font-size: 0.85rem;
-      color: #a9d6ff;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .hud-controls {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .progress-cluster {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 230px;
-    }
-
-    .progress-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.88rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-      color: var(--cyan-neon);
-      text-shadow: 0 0 8px rgba(48, 246, 255, 0.6);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 12px;
-      background: rgba(3, 10, 34, 0.9);
-      border: 1px solid rgba(48, 246, 255, 0.5);
-      border-radius: 999px;
-      overflow: hidden;
-      padding: 2px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #30f6ff, #baff3c);
-      box-shadow: 0 0 14px #baff3c;
-      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .energy-badge {
-      padding: 8px 14px;
-      border-radius: 12px;
-      background: rgba(186, 255, 60, 0.12);
-      border: 1.5px solid rgba(186, 255, 60, 0.55);
-      color: var(--lime-neon);
-      font-weight: 800;
-      font-size: 0.92rem;
-      box-shadow: 0 0 15px rgba(186, 255, 60, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .sound-btn {
-      background: rgba(48, 246, 255, 0.14);
-      border: 1.5px solid rgba(48, 246, 255, 0.55);
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 8px 14px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .sound-btn:hover {
-      background: rgba(48, 246, 255, 0.28);
-      transform: translateY(-2px);
-      box-shadow: 0 0 14px rgba(48, 246, 255, 0.45);
-    }
-
-    /* MAIN STAGE */
+    /* ==================== MAIN STAGE ==================== */
     .stage {
       height: min(650px, 72vh);
       min-height: 440px;
       width: 100%;
       overflow: hidden;
       position: relative;
-      border-radius: 22px;
-      border: 2px solid rgba(48, 246, 255, 0.55);
+      border-radius: 24px;
+      border: 2px solid rgba(48, 246, 255, 0.6);
       background: linear-gradient(180deg, #06133b 0%, #0c42bc 75%, #071f66 100%);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 30px rgba(48, 246, 255, 0.22);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.75), 0 0 32px rgba(48, 246, 255, 0.25);
       perspective: 1000px;
     }
 
@@ -194,15 +78,452 @@
       display: block;
       position: relative;
       z-index: 2;
+      transition: filter 0.45s ease, transform 0.45s ease;
     }
 
-    /* STATUS BANNERS */
+    .stage.canvas-blurred #gameCanvas {
+      filter: blur(6px) brightness(0.78);
+      transform: scale(1.03);
+    }
+
+    /* ==================== FLOATING IN-STAGE HUD ==================== */
+    .in-stage-hud {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      right: 16px;
+      z-index: 22;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .in-stage-hud.hud-hidden {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+
+    .hud-left-group,
+    .hud-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .progress-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 185px;
+      padding: 7px 14px;
+      border-radius: 14px;
+      background: rgba(6, 19, 59, 0.76);
+      border: 1.5px solid rgba(48, 246, 255, 0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: var(--cyan-neon);
+      text-shadow: 0 0 8px rgba(48, 246, 255, 0.6);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(3, 10, 34, 0.92);
+      border: 1px solid rgba(48, 246, 255, 0.45);
+      border-radius: 999px;
+      overflow: hidden;
+      padding: 1px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #30f6ff, #baff3c);
+      box-shadow: 0 0 12px #baff3c;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .energy-badge {
+      padding: 7px 13px;
+      border-radius: 12px;
+      background: rgba(6, 19, 59, 0.78);
+      border: 1.5px solid rgba(186, 255, 60, 0.6);
+      color: var(--lime-neon);
+      font-weight: 800;
+      font-size: 0.84rem;
+      box-shadow: 0 0 15px rgba(186, 255, 60, 0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hud-btn {
+      background: rgba(6, 19, 59, 0.78);
+      border: 1.5px solid rgba(48, 246, 255, 0.55);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 7px 13px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.22s ease,
+                  box-shadow 0.22s ease,
+                  border-color 0.22s ease;
+    }
+
+    .hud-btn:hover {
+      background: rgba(48, 246, 255, 0.25);
+      border-color: var(--lime-neon);
+      transform: scale(1.06);
+      box-shadow: 0 0 16px rgba(48, 246, 255, 0.5);
+    }
+
+    /* ==================== HOME SCREEN OVERLAY (KHÔNG TRÀN MÀN HÌNH) ==================== */
+    .home-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: radial-gradient(circle at 50% 40%, rgba(12, 66, 188, 0.38) 0%, rgba(4, 12, 38, 0.76) 100%);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0.42s ease;
+    }
+
+    .home-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .home-glass-card {
+      width: 92%;
+      max-width: 680px;
+      max-height: calc(100% - 16px);
+      padding: clamp(14px, 2.4vh, 26px) clamp(18px, 3vw, 32px);
+      border-radius: 26px;
+      background: linear-gradient(
+        135deg,
+        rgba(16, 46, 120, 0.68) 0%,
+        rgba(7, 20, 60, 0.82) 55%,
+        rgba(18, 38, 102, 0.72) 100%
+      );
+      backdrop-filter: blur(26px) saturate(200%);
+      -webkit-backdrop-filter: blur(26px) saturate(200%);
+      border: 2px solid rgba(48, 246, 255, 0.68);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.78),
+        0 0 40px rgba(48, 246, 255, 0.32),
+        inset 0 1px 2px rgba(255, 255, 255, 0.45),
+        inset 0 0 28px rgba(48, 246, 255, 0.16);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      transform: scale(1) translateY(0);
+      filter: blur(0px);
+      transition: transform 0.48s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.42s ease,
+                  opacity 0.42s ease;
+    }
+
+    .home-glass-card::-webkit-scrollbar {
+      display: none;
+    }
+
+    .home-overlay.hidden .home-glass-card {
+      transform: scale(1.16) translateY(-12px);
+      filter: blur(16px);
+      opacity: 0;
+    }
+
+    .home-glass-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(48, 246, 255, 0.2), transparent 36%),
+        radial-gradient(circle at 80% 75%, rgba(255, 99, 216, 0.18), transparent 38%),
+        linear-gradient(120deg, transparent 38%, rgba(255, 255, 255, 0.12) 50%, transparent 62%);
+      animation: liquidFlow 9s infinite alternate ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .home-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(8px, 1.5vh, 14px);
+      width: 100%;
+    }
+
+    /* Top utility row inside Home Card (Progress / Energy / Sound) */
+    .home-top-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .home-stat-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(6, 19, 59, 0.72);
+      border: 1.5px solid rgba(48, 246, 255, 0.45);
+      color: var(--cyan-neon);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+
+    .home-stat-pill.lime {
+      border-color: rgba(186, 255, 60, 0.55);
+      color: var(--lime-neon);
+    }
+
+    .home-sound-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(48, 246, 255, 0.16);
+      border: 1.5px solid rgba(48, 246, 255, 0.55);
+      color: #ffffff;
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .home-sound-pill:hover {
+      transform: scale(1.05);
+      border-color: var(--lime-neon);
+    }
+
+    /* Animated Cube Emblem on Home Screen */
+    .home-cube-showcase {
+      width: 58px;
+      height: 58px;
+      margin: 4px 0 2px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .home-cube-showcase:hover {
+      transform: scale(1.16) rotate(10deg);
+    }
+
+    .home-cube-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px dashed rgba(48, 246, 255, 0.78);
+      box-shadow: 0 0 18px rgba(48, 246, 255, 0.45);
+      animation: homeRingSpin 8s linear infinite;
+    }
+
+    @keyframes homeRingSpin {
+      0% { transform: rotate(0deg) scale(0.96); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(0.96); }
+    }
+
+    .home-cube-avatar {
+      width: 46px;
+      height: 46px;
+      background: #09193a;
+      border: 3.5px solid var(--lime-neon);
+      box-shadow: 0 0 20px rgba(186, 255, 60, 0.8), inset 0 0 10px rgba(48, 246, 255, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      animation: homeCubeFloat 2.4s ease-in-out infinite;
+    }
+
+    @keyframes homeCubeFloat {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-5px) rotate(4deg); }
+    }
+
+    .home-main-title {
+      font-size: clamp(1.45rem, 3.2vw, 2.25rem);
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      line-height: 1.12;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #30f6ff 0%, #baff3c 48%, #ff63d8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 3px 14px rgba(48, 246, 255, 0.48));
+    }
+
+    .home-subtitle {
+      font-size: clamp(0.84rem, 1.4vw, 0.98rem);
+      color: #a9d6ff;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      margin-top: -4px;
+    }
+
+    .home-desc {
+      font-size: clamp(0.82rem, 1.35vw, 0.94rem);
+      color: #d8eeff;
+      max-width: 540px;
+      line-height: 1.42;
+      font-weight: 500;
+    }
+
+    .home-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .home-features {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    .feature-card {
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(8, 24, 68, 0.65);
+      border: 1.5px solid rgba(48, 246, 255, 0.38);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  border-color 0.24s ease,
+                  box-shadow 0.24s ease;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.05) translateY(-2px);
+      border-color: var(--lime-neon);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 16px rgba(186, 255, 60, 0.35);
+    }
+
+    .feature-icon {
+      font-size: 1.15rem;
+    }
+
+    .feature-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--lime-neon);
+      letter-spacing: 0.4px;
+    }
+
+    .feature-sub {
+      font-size: 0.71rem;
+      color: #b4dcff;
+    }
+
+    /* START BUTTON GEOMETRY DASH STYLE */
+    .start-button {
+      margin-top: 2px;
+      padding: 12px 44px;
+      border-radius: 999px;
+      border: 2.5px solid #ffffff;
+      background: linear-gradient(90deg, #baff3c 0%, #30f6ff 55%, #ff63d8 100%);
+      background-size: 200% auto;
+      color: #041030;
+      font-size: 1.12rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      box-shadow:
+        0 0 26px rgba(186, 255, 60, 0.75),
+        0 0 50px rgba(48, 246, 255, 0.45),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      animation: startBtnPulse 2s infinite ease-in-out;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.25s ease,
+                  background-position 0.4s ease;
+    }
+
+    .start-button:hover {
+      background-position: right center;
+      transform: scale(1.08) translateY(-2px);
+      box-shadow:
+        0 0 38px rgba(186, 255, 60, 0.95),
+        0 0 70px rgba(48, 246, 255, 0.75);
+    }
+
+    .start-button:active {
+      transform: scale(0.96);
+    }
+
+    @keyframes startBtnPulse {
+      0%, 100% {
+        box-shadow: 0 0 24px rgba(186, 255, 60, 0.7), 0 0 48px rgba(48, 246, 255, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 36px rgba(186, 255, 60, 0.95), 0 0 65px rgba(255, 99, 216, 0.65);
+      }
+    }
+
+    /* ==================== STATUS BANNERS ==================== */
     .instruction-bar {
       position: absolute;
-      top: 18px;
+      top: 64px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 12;
+      z-index: 15;
       pointer-events: none;
       display: flex;
       gap: 10px;
@@ -211,17 +532,18 @@
 
     .inst-pill {
       display: none;
-      padding: 10px 22px;
+      padding: 8px 20px;
       border-radius: 999px;
       font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 0.6px;
+      font-size: 0.86rem;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      background: rgba(6, 19, 59, 0.85);
+      background: rgba(6, 19, 59, 0.82);
       border: 1.5px solid var(--cyan-neon);
       color: #ffffff;
       box-shadow: 0 0 20px rgba(48, 246, 255, 0.45), inset 0 0 12px rgba(48, 246, 255, 0.2);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       white-space: nowrap;
     }
 
@@ -235,7 +557,7 @@
     .inst-pill.click-alert {
       border-color: var(--lime-neon);
       color: var(--lime-neon);
-      box-shadow: 0 0 25px rgba(186, 255, 60, 0.6), inset 0 0 14px rgba(186, 255, 60, 0.25);
+      box-shadow: 0 0 28px rgba(186, 255, 60, 0.65), inset 0 0 14px rgba(186, 255, 60, 0.25);
     }
 
     @keyframes pillPulse {
@@ -243,47 +565,48 @@
       50% { transform: scale(1.05); }
     }
 
-    /* INTERACTIVE CUBE HITBOX OVERLAY (>= 100x100px) & 3D SPIN CUBE */
+    /* ==================== INTERACTIVE CUBE HITBOX (>= 115x115px) ==================== */
     #cube-click-target {
       position: absolute;
-      width: 112px;
-      height: 112px;
+      width: 118px;
+      height: 118px;
       transform: translate(-50%, -50%);
-      z-index: 25;
+      z-index: 30;
       cursor: pointer;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(186, 255, 60, 0.18) 0%, rgba(48, 246, 255, 0.05) 60%, transparent 75%);
-      border: 2px dashed rgba(186, 255, 60, 0.75);
-      box-shadow: 0 0 25px rgba(186, 255, 60, 0.45);
+      background: radial-gradient(circle, rgba(186, 255, 60, 0.24) 0%, rgba(48, 246, 255, 0.08) 62%, transparent 78%);
+      border: 2.5px dashed rgba(186, 255, 60, 0.85);
+      box-shadow: 0 0 28px rgba(186, 255, 60, 0.55);
       display: none;
       align-items: center;
       justify-content: center;
       pointer-events: auto;
       touch-action: manipulation;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
     }
 
     #cube-click-target.visible {
       display: flex;
-      animation: targetPulseRing 1.1s infinite ease-in-out;
+      animation: targetPulseRing 1.05s infinite ease-in-out;
     }
 
     #cube-click-target:hover {
-      background: radial-gradient(circle, rgba(186, 255, 60, 0.35) 0%, rgba(48, 246, 255, 0.18) 65%, transparent 80%);
-      box-shadow: 0 0 35px rgba(186, 255, 60, 0.85), 0 0 60px rgba(48, 246, 255, 0.6);
+      background: radial-gradient(circle, rgba(186, 255, 60, 0.42) 0%, rgba(48, 246, 255, 0.22) 68%, transparent 82%);
+      box-shadow: 0 0 42px rgba(186, 255, 60, 0.95), 0 0 70px rgba(48, 246, 255, 0.7);
     }
 
     .click-badge-label {
       position: absolute;
-      bottom: -28px;
-      padding: 3px 10px;
+      bottom: -30px;
+      padding: 4px 12px;
       border-radius: 999px;
-      background: #baff3c;
+      background: var(--lime-neon);
       color: #051336;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 900;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      box-shadow: 0 0 12px #baff3c;
+      box-shadow: 0 0 14px var(--lime-neon);
       pointer-events: none;
       white-space: nowrap;
     }
@@ -291,21 +614,21 @@
     @keyframes targetPulseRing {
       0%, 100% {
         transform: translate(-50%, -50%) scale(0.94);
-        border-color: rgba(186, 255, 60, 0.85);
+        border-color: rgba(186, 255, 60, 0.9);
       }
       50% {
-        transform: translate(-50%, -50%) scale(1.1);
-        border-color: rgba(48, 246, 255, 0.95);
+        transform: translate(-50%, -50%) scale(1.12);
+        border-color: rgba(48, 246, 255, 0.98);
       }
     }
 
-    /* 3D SPINNING CUBE OVERLAY */
+    /* ==================== 3D SPINNING CUBE OVERLAY ==================== */
     #cube-3d-wrapper {
       position: absolute;
       width: 56px;
       height: 56px;
       transform: translate(-50%, -50%);
-      z-index: 26;
+      z-index: 32;
       pointer-events: none;
       perspective: 600px;
       display: none;
@@ -327,9 +650,9 @@
       position: absolute;
       width: 56px;
       height: 56px;
-      background: rgba(10, 26, 58, 0.92);
+      background: rgba(10, 26, 58, 0.94);
       border: 3.5px solid var(--lime-neon);
-      box-shadow: 0 0 22px rgba(186, 255, 60, 0.85), inset 0 0 12px rgba(48, 246, 255, 0.55);
+      box-shadow: 0 0 24px rgba(186, 255, 60, 0.88), inset 0 0 14px rgba(48, 246, 255, 0.6);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -339,19 +662,19 @@
 
     .cube-face-eyes {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .cube-face-eyes span {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       background: var(--cyan-neon);
       box-shadow: 0 0 8px var(--cyan-neon);
     }
 
     .cube-face-mouth {
-      width: 28px;
-      height: 7px;
+      width: 24px;
+      height: 6px;
       background: var(--cyan-neon);
       box-shadow: 0 0 8px var(--cyan-neon);
     }
@@ -368,14 +691,14 @@
         transform: scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
       }
       45% {
-        transform: scale(1.42) rotateX(360deg) rotateY(180deg) rotateZ(90deg);
+        transform: scale(1.45) rotateX(360deg) rotateY(180deg) rotateZ(90deg);
       }
       100% {
-        transform: scale(1.05) rotateX(720deg) rotateY(360deg) rotateZ(180deg);
+        transform: scale(1.06) rotateX(720deg) rotateY(360deg) rotateZ(180deg);
       }
     }
 
-    /* LIQUID GLASS QUIZ MODAL */
+    /* ==================== LIQUID GLASS QUIZ MODAL ==================== */
     .quiz-overlay {
       position: absolute;
       inset: 0;
@@ -383,11 +706,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, rgba(6, 19, 59, 0.45) 0%, rgba(2, 8, 28, 0.78) 100%);
+      background: radial-gradient(circle at center, rgba(10, 32, 92, 0.45) 0%, rgba(2, 8, 28, 0.78) 100%);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.32s ease, visibility 0.32s ease;
+      transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0.36s ease;
       padding: 16px;
     }
 
@@ -403,30 +729,33 @@
       position: relative;
       overflow: hidden;
       border-radius: 28px;
-      padding: clamp(20px, 3.2vw, 34px);
+      padding: clamp(18px, 3vw, 32px);
       background: linear-gradient(
         135deg,
-        rgba(18, 48, 124, 0.62) 0%,
-        rgba(8, 22, 64, 0.74) 55%,
-        rgba(16, 36, 98, 0.65) 100%
+        rgba(18, 52, 134, 0.65) 0%,
+        rgba(8, 22, 64, 0.78) 55%,
+        rgba(20, 42, 108, 0.68) 100%
       );
-      backdrop-filter: blur(25px) saturate(190%);
-      -webkit-backdrop-filter: blur(25px) saturate(190%);
-      border: 2px solid rgba(48, 246, 255, 0.68);
+      backdrop-filter: blur(25px) saturate(200%);
+      -webkit-backdrop-filter: blur(25px) saturate(200%);
+      border: 2px solid rgba(48, 246, 255, 0.72);
       box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.75),
-        0 0 38px rgba(48, 246, 255, 0.35),
-        inset 0 1px 2px rgba(255, 255, 255, 0.45),
-        inset 0 0 28px rgba(48, 246, 255, 0.18);
-      transform: translateY(28px) scale(0.9) rotateX(8deg);
-      transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+        0 28px 65px rgba(0, 0, 0, 0.78),
+        0 0 42px rgba(48, 246, 255, 0.38),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        inset 0 0 32px rgba(48, 246, 255, 0.22);
+      transform: translateY(34px) scale(0.84) rotateX(10deg);
+      filter: blur(14px);
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.38s ease,
+                  box-shadow 0.38s ease;
     }
 
     .quiz-overlay.active .liquid-glass-modal {
       transform: translateY(0) scale(1) rotateX(0deg);
+      filter: blur(0px);
     }
 
-    /* Liquid Glass Specular Sheen & Ambient Orbs */
     .liquid-glass-modal::before {
       content: "";
       position: absolute;
@@ -434,10 +763,11 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 30% 25%, rgba(48, 246, 255, 0.18), transparent 35%),
-                  radial-gradient(circle at 75% 80%, rgba(255, 99, 216, 0.16), transparent 40%),
-                  linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.12) 48%, transparent 60%);
-      animation: liquidFlow 8s infinite alternate ease-in-out;
+      background:
+        radial-gradient(circle at 28% 22%, rgba(48, 246, 255, 0.22), transparent 35%),
+        radial-gradient(circle at 76% 82%, rgba(255, 99, 216, 0.2), transparent 38%),
+        linear-gradient(115deg, transparent 36%, rgba(255, 255, 255, 0.14) 48%, transparent 60%);
+      animation: liquidFlow 7s infinite alternate ease-in-out;
       pointer-events: none;
       z-index: 0;
     }
@@ -452,7 +782,7 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     .modal-header {
@@ -461,7 +791,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 10px;
-      border-bottom: 1px solid rgba(48, 246, 255, 0.28);
+      border-bottom: 1px solid rgba(48, 246, 255, 0.32);
       padding-bottom: 12px;
     }
 
@@ -478,7 +808,7 @@
       font-size: 0.88rem;
       letter-spacing: 1.2px;
       text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(48, 246, 255, 0.35);
+      box-shadow: 0 0 16px rgba(48, 246, 255, 0.38);
     }
 
     .quiz-hint {
@@ -490,9 +820,9 @@
     .quiz-question-text {
       font-size: clamp(1.25rem, 2.2vw, 1.6rem);
       font-weight: 800;
-      line-height: 1.4;
+      line-height: 1.38;
       color: #ffffff;
-      text-shadow: 0 2px 14px rgba(48, 246, 255, 0.45);
+      text-shadow: 0 2px 16px rgba(48, 246, 255, 0.5);
       letter-spacing: 0.2px;
     }
 
@@ -515,10 +845,12 @@
       min-height: 58px;
       padding: 12px 18px;
       border-radius: 16px;
-      border: 1.8px solid rgba(48, 246, 255, 0.45);
-      background: linear-gradient(135deg, rgba(12, 33, 88, 0.72) 0%, rgba(6, 18, 52, 0.85) 100%);
+      border: 1.8px solid rgba(48, 246, 255, 0.48);
+      background: linear-gradient(135deg, rgba(14, 38, 102, 0.72) 0%, rgba(6, 18, 54, 0.86) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       color: #ffffff;
-      font-size: 1.04rem;
+      font-size: 1.05rem;
       font-weight: 700;
       text-align: left;
       display: flex;
@@ -527,35 +859,43 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  border-color 0.22s ease,
-                  box-shadow 0.22s ease,
-                  background 0.22s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.42), inset 0 1px 2px rgba(255, 255, 255, 0.28);
+      transform: scale(1);
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  border-color 0.24s ease,
+                  box-shadow 0.24s ease,
+                  background 0.24s ease;
     }
 
     .option-btn::after {
       content: "";
       position: absolute;
       top: 0;
-      left: -100%;
-      width: 60%;
+      left: -110%;
+      width: 65%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
       transform: skewX(-25deg);
-      transition: left 0.45s ease;
+      transition: left 0.48s ease;
       pointer-events: none;
     }
 
     .option-btn:hover:not(:disabled) {
       transform: scale(1.05);
       border-color: var(--lime-neon);
-      background: linear-gradient(135deg, rgba(24, 66, 158, 0.85) 0%, rgba(12, 36, 98, 0.92) 100%);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 0 22px rgba(186, 255, 60, 0.5);
+      background: linear-gradient(135deg, rgba(28, 74, 176, 0.88) 0%, rgba(12, 38, 104, 0.95) 100%);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.6),
+        0 0 24px rgba(186, 255, 60, 0.55),
+        inset 0 0 15px rgba(48, 246, 255, 0.25);
     }
 
     .option-btn:hover:not(:disabled)::after {
-      left: 140%;
+      left: 145%;
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: scale(0.98);
     }
 
     .option-key {
@@ -571,28 +911,28 @@
       font-weight: 900;
       font-size: 0.95rem;
       flex-shrink: 0;
-      box-shadow: 0 0 10px rgba(48, 246, 255, 0.3);
-      transition: all 0.22s ease;
+      box-shadow: 0 0 12px rgba(48, 246, 255, 0.32);
+      transition: transform 0.24s ease, background 0.24s ease, color 0.24s ease, box-shadow 0.24s ease;
     }
 
     .option-btn:hover:not(:disabled) .option-key {
       background: var(--lime-neon);
       border-color: var(--lime-neon);
-      color: #06133b;
-      box-shadow: 0 0 14px var(--lime-neon);
+      color: #051336;
+      transform: scale(1.1) rotate(-4deg);
+      box-shadow: 0 0 16px var(--lime-neon);
     }
 
     .option-label {
       flex: 1;
-      line-height: 1.3;
+      line-height: 1.32;
     }
 
-    /* Option States: Correct & Wrong / Disabled */
     .option-btn.correct-glow {
       border-color: var(--lime-neon) !important;
-      background: linear-gradient(135deg, rgba(50, 180, 60, 0.88), rgba(18, 95, 40, 0.95)) !important;
-      box-shadow: 0 0 32px rgba(186, 255, 60, 0.95), inset 0 0 18px rgba(255, 255, 255, 0.45) !important;
-      transform: scale(1.05) !important;
+      background: linear-gradient(135deg, rgba(52, 190, 66, 0.9), rgba(18, 98, 42, 0.96)) !important;
+      box-shadow: 0 0 36px rgba(186, 255, 60, 0.95), inset 0 0 20px rgba(255, 255, 255, 0.5) !important;
+      transform: scale(1.06) !important;
     }
 
     .option-btn.correct-glow .option-key {
@@ -603,11 +943,11 @@
 
     .option-btn.wrong-disabled {
       border-color: var(--red-neon) !important;
-      background: linear-gradient(135deg, rgba(120, 16, 42, 0.68), rgba(62, 8, 24, 0.78)) !important;
+      background: linear-gradient(135deg, rgba(125, 16, 44, 0.7), rgba(60, 8, 24, 0.8)) !important;
       color: rgba(255, 190, 205, 0.65) !important;
-      box-shadow: 0 0 18px rgba(255, 51, 102, 0.4) !important;
+      box-shadow: 0 0 18px rgba(255, 51, 102, 0.42) !important;
       cursor: not-allowed !important;
-      transform: scale(0.98) !important;
+      transform: scale(0.97) !important;
       opacity: 0.72;
     }
 
@@ -629,7 +969,7 @@
       75% { transform: translateX(-6px); }
     }
 
-    /* VICTORY MODAL */
+    /* ==================== VICTORY MODAL ==================== */
     .win-overlay {
       position: absolute;
       inset: 0;
@@ -637,14 +977,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, rgba(12, 66, 188, 0.65) 0%, rgba(4, 11, 36, 0.92) 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: radial-gradient(circle at center, rgba(12, 66, 188, 0.65) 0%, rgba(4, 11, 36, 0.9) 100%);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-      padding: 20px;
+      transition: opacity 0.42s ease, visibility 0.42s ease;
+      padding: 16px;
     }
 
     .win-overlay.active {
@@ -655,46 +995,53 @@
 
     .win-card {
       width: 90%;
-      max-width: 580px;
-      background: linear-gradient(145deg, rgba(14, 40, 108, 0.85), rgba(6, 19, 59, 0.94));
+      max-width: 560px;
+      max-height: calc(100% - 16px);
+      overflow-y: auto;
+      background: linear-gradient(145deg, rgba(14, 42, 114, 0.82), rgba(6, 19, 59, 0.94));
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 2.5px solid var(--lime-neon);
       border-radius: 28px;
-      padding: 36px 28px;
+      padding: clamp(20px, 3vh, 32px) 24px;
       text-align: center;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 45px rgba(186, 255, 60, 0.4);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.85), 0 0 48px rgba(186, 255, 60, 0.42);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
-      transform: scale(0.88);
-      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      gap: 14px;
+      transform: scale(0.84) translateY(24px);
+      filter: blur(12px);
+      transition: transform 0.48s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.42s ease;
     }
 
     .win-overlay.active .win-card {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
+      filter: blur(0px);
     }
 
     .trophy-icon {
-      width: 92px;
-      height: 92px;
+      width: 76px;
+      height: 76px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0.05) 70%);
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.32) 0%, rgba(255, 215, 0, 0.05) 70%);
       border: 2px solid var(--gold-neon);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      box-shadow: 0 0 35px rgba(255, 215, 0, 0.6);
+      font-size: 2.5rem;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.65);
       animation: trophyFloat 2s infinite ease-in-out;
     }
 
     @keyframes trophyFloat {
       0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-8px) scale(1.06); }
+      50% { transform: translateY(-6px) scale(1.06); }
     }
 
     .win-title {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
       font-weight: 900;
       text-transform: uppercase;
       background: linear-gradient(90deg, #ffd700, #baff3c, #30f6ff);
@@ -704,98 +1051,124 @@
     }
 
     .win-description {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       color: #d6ecff;
-      line-height: 1.5;
-      max-width: 460px;
+      line-height: 1.45;
+      max-width: 450px;
     }
 
     .win-stats {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       justify-content: center;
-      margin: 6px 0;
     }
 
     .stat-box {
-      padding: 12px 20px;
-      border-radius: 16px;
+      padding: 10px 18px;
+      border-radius: 14px;
       background: rgba(48, 246, 255, 0.12);
       border: 1.5px solid rgba(48, 246, 255, 0.45);
-      min-width: 140px;
+      min-width: 135px;
     }
 
     .stat-label {
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
       color: #9bd6ff;
       font-weight: 700;
     }
 
     .stat-value {
-      font-size: 1.45rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: var(--lime-neon);
       margin-top: 2px;
     }
 
+    .win-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
     .restart-button {
-      margin-top: 8px;
-      padding: 15px 36px;
+      padding: 13px 30px;
       border-radius: 999px;
       border: none;
       background: linear-gradient(90deg, #baff3c 0%, #30f6ff 100%);
       color: #051336;
-      font-size: 1.08rem;
+      font-size: 0.98rem;
       font-weight: 900;
       letter-spacing: 1px;
       text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 0 28px rgba(186, 255, 60, 0.65);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      box-shadow: 0 0 26px rgba(186, 255, 60, 0.65);
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.24s ease;
     }
 
     .restart-button:hover {
+      transform: scale(1.07) translateY(-2px);
+      box-shadow: 0 0 38px rgba(48, 246, 255, 0.9);
+    }
+
+    .home-return-btn {
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: 2px solid rgba(48, 246, 255, 0.7);
+      background: rgba(10, 28, 78, 0.75);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  border-color 0.24s ease,
+                  box-shadow 0.24s ease;
+    }
+
+    .home-return-btn:hover {
       transform: scale(1.06) translateY(-2px);
-      box-shadow: 0 0 40px rgba(48, 246, 255, 0.9);
+      border-color: var(--lime-neon);
+      box-shadow: 0 0 24px rgba(48, 246, 255, 0.55);
     }
   </style>
 </head>
 <body>
   <div class="game-wrapper">
-    <!-- TOP BAR & HUD -->
-    <header class="top-bar">
-      <div class="brand-box">
-        <h1 class="game-title" data-template-id="game-title">DASH QUIZ PLATFORMER</h1>
-        <p class="game-subtitle" data-template-id="game-subtitle">Chinh phục 10 thử thách trí tuệ theo phong cách Geometry Dash</p>
-      </div>
-
-      <div class="hud-controls">
-        <div class="progress-cluster">
-          <div class="progress-labels">
-            <span id="hudQuestionCounter">CÂU 01 / 10</span>
-            <span id="hudPercentText">0%</span>
+    <!-- GAME STAGE (Độc lập hoàn toàn, không còn khung header thừa phía trên) -->
+    <main class="stage canvas-blurred" id="gameStage">
+      <!-- Floating In-Game HUD (Ẩn khi ở Trang chủ, hiện khi đang chơi) -->
+      <div class="in-stage-hud hud-hidden" id="inStageHud">
+        <div class="hud-left-group">
+          <div class="progress-cluster">
+            <div class="progress-labels">
+              <span id="hudQuestionCounter">CÂU 01 / 10</span>
+              <span id="hudPercentText">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="hudProgressFill"></div>
+            </div>
           </div>
-          <div class="progress-track">
-            <div class="progress-fill" id="hudProgressFill"></div>
+
+          <div class="energy-badge">
+            <span>⚡ NĂNG LƯỢNG:</span>
+            <span id="hudEnergyScore">1000</span>
           </div>
         </div>
 
-        <div class="energy-badge">
-          <span>⚡ NĂNG LƯỢNG:</span>
-          <span id="hudEnergyScore">1000</span>
+        <div class="hud-right-group">
+          <button type="button" class="hud-btn" id="openHomeBtn">🏠 TRANG CHỦ</button>
+          <button type="button" class="hud-btn" id="soundToggleBtn">🔊 ÂM THANH: BẬT</button>
         </div>
-
-        <button type="button" class="sound-btn" id="soundToggleBtn">🔊 ÂM THANH: BẬT</button>
       </div>
-    </header>
 
-    <!-- GAME STAGE -->
-    <main class="stage" id="gameStage">
       <!-- Status Instructions -->
       <div class="instruction-bar">
-        <div class="inst-pill active" id="instRunning" data-template-id="instruction-running">
+        <div class="inst-pill" id="instRunning" data-template-id="instruction-running">
           ⚡ ĐANG TĂNG TỐC VƯỢT CHƯỚNG NGẠI VẬT...
         </div>
         <div class="inst-pill click-alert" id="instClick" data-template-id="instruction-click">
@@ -806,9 +1179,9 @@
         </div>
       </div>
 
-      <!-- Dedicated DOM Hitbox (>= 110x110px) synced to Cube position during AWAITING_CLICK -->
+      <!-- Dedicated DOM Hitbox (>= 118x118px) synced to Cube position during AWAITING_CLICK -->
       <div id="cube-click-target" role="button" tabindex="0" aria-label="Bấm vào khối vuông để mở câu hỏi">
-        <span class="click-badge-label">CLICK VÀO ĐÂY</span>
+        <span class="click-badge-label">CLICK VÀO CUBE</span>
       </div>
 
       <!-- True 3D Multi-Axis Spinning Cube Overlay for SPINNING_3D state -->
@@ -838,6 +1211,61 @@
       <!-- 2D Game Canvas -->
       <canvas id="gameCanvas"></canvas>
 
+      <!-- HOME SCREEN OVERLAY (TRANG CHỦ - Tích hợp đầy đủ nội dung & vừa khít khung hình) -->
+      <div class="home-overlay" id="homeOverlay">
+        <div class="home-glass-card">
+          <div class="home-content">
+            <!-- Hàng thông tin trạng thái đồng bộ trên trang chủ -->
+            <div class="home-top-pills">
+              <span class="home-stat-pill">🎯 TIẾN ĐỘ: 10 CÂU HỎI</span>
+              <span class="home-stat-pill lime">⚡ NĂNG LƯỢNG: 1000</span>
+              <button type="button" class="home-sound-pill" id="homeSoundBtn">🔊 ÂM THANH: BẬT</button>
+            </div>
+
+            <!-- Biểu tượng Geometry Cube ở chính giữa -->
+            <div class="home-cube-showcase" id="homeCubeIcon" title="Biểu tượng Geometry Cube">
+              <div class="home-cube-ring"></div>
+              <div class="home-cube-avatar">
+                <div class="cube-face-eyes"><span></span><span></span></div>
+                <div class="cube-face-mouth"></div>
+              </div>
+            </div>
+
+            <!-- Tiêu đề và Phụ đề chuyển trực tiếp vào khung chính giữa Trang chủ -->
+            <h1 class="home-main-title" data-template-id="game-title">DASH QUIZ PLATFORMER</h1>
+            <p class="home-subtitle" data-template-id="game-subtitle">
+              Chinh phục 10 thử thách trí tuệ theo phong cách Geometry Dash
+            </p>
+
+            <p class="home-desc">
+              Lao mình qua không gian Neon tốc độ cao, bật nhảy lơ lửng ngay trên những mũi gai tử thần, kích hoạt khối xoay 3D và giải mã 10 câu hỏi trí tuệ để mở Cổng Không Gian!
+            </p>
+
+            <div class="home-features">
+              <div class="feature-card">
+                <span class="feature-icon">🚀</span>
+                <span class="feature-title">NHẢY PARABOL</span>
+                <span class="feature-sub">Dừng chuẩn xác trên đỉnh gai</span>
+              </div>
+              <div class="feature-card">
+                <span class="feature-icon">🎲</span>
+                <span class="feature-title">XOAY 3D & KÍNH LỎNG</span>
+                <span class="feature-sub">Bấm vào Cube mở bảng Quiz</span>
+              </div>
+              <div class="feature-card">
+                <span class="feature-icon">💥</span>
+                <span class="feature-title">NỔ VỤN & HỒI SINH</span>
+                <span class="feature-sub">Hiệu ứng mảnh vỡ chân thực</span>
+              </div>
+            </div>
+
+            <button type="button" class="start-button" id="startGameBtn">
+              <span>▶ START</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- LIQUID GLASS QUIZ MODAL -->
       <div class="quiz-overlay" id="quizOverlay">
         <div class="liquid-glass-modal" id="quizModalCard">
@@ -862,7 +1290,7 @@
       <div class="win-overlay" id="winOverlay">
         <div class="win-card">
           <div class="trophy-icon">🏆</div>
-          <h2 class="win-title" data-template-id="win-title">CHinh Phục Đỉnh Cao!</h2>
+          <h2 class="win-title" data-template-id="win-title">CHINH PHỤC ĐỈNH CAO!</h2>
           <p class="win-description" data-template-id="win-description">
             Xuất sắc! Bạn đã vượt qua toàn bộ 10 bãi gai tử thần và lao xuyên qua Cổng Dịch Chuyển Không Gian thành công!
           </p>
@@ -876,9 +1304,14 @@
               <div class="stat-value" id="winFinalScore">1000</div>
             </div>
           </div>
-          <button type="button" class="restart-button" id="restartGameBtn" data-template-id="restart-button">
-            🔄 CHƠI LẠI TỪ ĐẦU
-          </button>
+          <div class="win-actions">
+            <button type="button" class="restart-button" id="restartGameBtn" data-template-id="restart-button">
+              🔄 CHƠI LẠI TỪ ĐẦU
+            </button>
+            <button type="button" class="home-return-btn" id="winToHomeBtn">
+              🏠 VỀ TRANG CHỦ
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -962,6 +1395,27 @@
         }
       }
 
+      playStartGame() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const notes = [329.63, 440, 554.37, 659.25, 880];
+        notes.forEach((f, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(f, now + idx * 0.055);
+          gain.gain.setValueAtTime(0.14, now + idx * 0.055);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.055 + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.055);
+          osc.stop(now + idx * 0.055 + 0.26);
+        });
+      }
+
       playJump() {
         if (!this.enabled) return;
         this.init();
@@ -1016,8 +1470,8 @@
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(720, now);
-        osc.frequency.exponentialRampToValueAtTime(980, now + 0.045);
+        osc.frequency.setValueAtTime(740, now);
+        osc.frequency.exponentialRampToValueAtTime(1020, now + 0.045);
 
         gain.gain.setValueAtTime(0.05, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
@@ -1078,7 +1532,6 @@
         if (!this.ctx) return;
 
         const now = this.ctx.currentTime;
-        // White noise burst + low impact bass
         const bufferSize = this.ctx.sampleRate * 0.45;
         const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const data = buffer.getChannelData(0);
@@ -1102,7 +1555,6 @@
         gain.connect(this.ctx.destination);
         noise.start(now);
 
-        // Sub drop
         const sub = this.ctx.createOscillator();
         const subGain = this.ctx.createGain();
         sub.type = 'sine';
@@ -1168,11 +1620,14 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
+    const inStageHud = document.getElementById('inStageHud');
     const hudQuestionCounter = document.getElementById('hudQuestionCounter');
     const hudPercentText = document.getElementById('hudPercentText');
     const hudProgressFill = document.getElementById('hudProgressFill');
     const hudEnergyScore = document.getElementById('hudEnergyScore');
+    const openHomeBtn = document.getElementById('openHomeBtn');
     const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const homeSoundBtn = document.getElementById('homeSoundBtn');
 
     const instRunning = document.getElementById('instRunning');
     const instClick = document.getElementById('instClick');
@@ -1182,6 +1637,10 @@
     const cube3DWrapper = document.getElementById('cube-3d-wrapper');
     const cube3DInner = document.getElementById('cube-3d-inner');
 
+    const homeOverlay = document.getElementById('homeOverlay');
+    const startGameBtn = document.getElementById('startGameBtn');
+    const homeCubeIcon = document.getElementById('homeCubeIcon');
+
     const quizOverlay = document.getElementById('quizOverlay');
     const modalQuestionBadge = document.getElementById('modalQuestionBadge');
     const modalQuestionText = document.getElementById('modalQuestionText');
@@ -1190,23 +1649,21 @@
     const winOverlay = document.getElementById('winOverlay');
     const winFinalScore = document.getElementById('winFinalScore');
     const restartGameBtn = document.getElementById('restartGameBtn');
+    const winToHomeBtn = document.getElementById('winToHomeBtn');
 
-    // Hằng số vật lý & kích thước chuẩn Geometry Dash
     const CUBE_SIZE = 50;
     const SPIKE_WIDTH = 34;
     const SPIKE_HEIGHT = 44;
-    // Độ cao đỉnh nhảy hợp lý: cách mặt đất 112px (đáy Cube cách đỉnh gai ~68px, vừa đẹp & kịch tính)
-    const JUMP_PEAK_HEIGHT = 112;
-    const JUMP_HORIZONTAL_SPAN = 250; // Tổng chiều ngang của 1 cú nhảy parabol
+    const JUMP_PEAK_HEIGHT = 106;
+    const JUMP_HORIZONTAL_SPAN = 248;
 
-    // Biến trạng thái chính
-    let gameState = 'RUNNING';
-    // Các trạng thái: RUNNING | JUMP_UP | AWAITING_CLICK | SPINNING_3D | QUIZ_MODAL | FALL_FAIL | SHATTER | RESPAWN | JUMP_DOWN | VICTORY_RUN | VICTORY
+    let gameState = 'HOME';
+    // HOME | RUNNING | JUMP_UP | AWAITING_CLICK | SPINNING_3D | QUIZ_MODAL | FALL_FAIL | SHATTER | RESPAWN | JUMP_DOWN | VICTORY_RUN | VICTORY
 
     let currentQuestionIndex = 0;
     let energyScore = 1000;
     let isAnswering = false;
-    let disabledOptions = new Set(); // Lưu các đáp án sai đã chọn ở câu hiện tại
+    let disabledOptions = new Set();
 
     let worldTime = 0;
     let stateTimer = 0;
@@ -1216,37 +1673,32 @@
     let bgScrollFar = 0;
     let bgScrollMid = 0;
 
-    // Tọa độ mặt đất tính theo chiều cao Canvas
     let groundY = 380;
 
-    // Đối tượng Cube
     const cube = {
       x: 210,
-      y: 0, // Sẽ được gán = groundY - CUBE_SIZE
+      y: 0,
       vy: 0,
-      rotation: 0, // Radian
+      rotation: 0,
       scaleX: 1,
       scaleY: 1,
-      jumpProgress: 0, // 0 -> 0.5 (JUMP_UP), 0.5 -> 1.0 (JUMP_DOWN)
+      jumpProgress: 0,
       hoverOffset: 0,
       visible: true,
       trail: []
     };
 
-    // Chướng ngại vật hiện tại (Cụm 3 gai nhọn + khối hộp trang trí)
     const obstacle = {
       x: 780,
       spikeCount: 3,
       width: SPIKE_WIDTH * 3
     };
 
-    // Cổng dịch chuyển khổng lồ cuối màn
     const victoryPortal = {
       active: false,
       x: 900
     };
 
-    // Mảng trang trí hậu cảnh (Khối treo, Jump Orbs, Mini Gravity Portals)
     const bgDecorations = [];
     const bgSquares = [];
     const dustParticles = [];
@@ -1284,10 +1736,10 @@
       const rect = stageEl.getBoundingClientRect();
       canvas.width = rect.width;
       canvas.height = rect.height;
-      groundY = Math.floor(canvas.height * 0.77);
+      groundY = Math.floor(canvas.height * 0.78);
       cube.x = Math.min(220, Math.max(120, Math.floor(canvas.width * 0.22)));
 
-      if (gameState === 'RUNNING' || gameState === 'VICTORY_RUN') {
+      if (gameState === 'HOME' || gameState === 'RUNNING' || gameState === 'VICTORY_RUN') {
         cube.y = groundY - CUBE_SIZE;
       } else if (
         gameState === 'AWAITING_CLICK' ||
@@ -1303,7 +1755,7 @@
     window.addEventListener('resize', resizeCanvas);
 
     /* =========================================================================
-       5. ĐỒNG BỘ TỌA ĐỘ CUBE VỚI HITBOX DOM & KHỐI 3D
+       5. ĐỒNG BỘ TỌA ĐỘ CUBE VỚI HITBOX DOM, BLUR STAGE & HUD
        ========================================================================= */
     function syncDOMOverlaysToCube() {
       const centerX = cube.x + CUBE_SIZE * 0.5;
@@ -1316,16 +1768,32 @@
       cube3DWrapper.style.top = `${centerY}px`;
     }
 
-    function updateInstructionBanner() {
+    function updateStageBlurAndBanners() {
       instRunning.classList.remove('active');
       instClick.classList.remove('active');
       instQuiz.classList.remove('active');
+
+      if (gameState === 'HOME') {
+        inStageHud.classList.add('hud-hidden');
+      } else {
+        inStageHud.classList.remove('hud-hidden');
+      }
+
+      if (gameState === 'HOME' || gameState === 'QUIZ_MODAL' || gameState === 'VICTORY') {
+        stageEl.classList.add('canvas-blurred');
+      } else {
+        stageEl.classList.remove('canvas-blurred');
+      }
+
+      if (gameState === 'HOME' || gameState === 'VICTORY') {
+        return;
+      }
 
       if (gameState === 'AWAITING_CLICK') {
         instClick.classList.add('active');
       } else if (gameState === 'QUIZ_MODAL') {
         instQuiz.classList.add('active');
-      } else if (gameState !== 'VICTORY') {
+      } else {
         instRunning.classList.add('active');
       }
     }
@@ -1345,12 +1813,12 @@
     function setState(newState) {
       gameState = newState;
       stateTimer = 0;
-      updateInstructionBanner();
+      updateStageBlurAndBanners();
 
       if (newState === 'AWAITING_CLICK') {
         cube.jumpProgress = 0.5;
         cube.y = groundY - CUBE_SIZE - JUMP_PEAK_HEIGHT;
-        cube.rotation = Math.PI; // 180 độ chuẩn nửa vòng nhảy
+        cube.rotation = Math.PI;
         syncDOMOverlaysToCube();
         cubeClickTarget.classList.add('visible');
         cube3DWrapper.classList.remove('spinning');
@@ -1361,17 +1829,15 @@
       if (newState === 'SPINNING_3D') {
         sound.playSpin3D();
         syncDOMOverlaysToCube();
-        // Reset animation 3D Cube để chạy lại mượt mà
         cube3DWrapper.classList.remove('spinning');
         void cube3DInner.offsetWidth;
         cube3DWrapper.classList.add('spinning');
-        spawnWindVortex(cube.x + CUBE_SIZE / 2, cube.y + CUBE_SIZE / 2, 22);
+        spawnWindVortex(cube.x + CUBE_SIZE / 2, cube.y + CUBE_SIZE / 2, 24);
       } else {
         cube3DWrapper.classList.remove('spinning');
       }
     }
 
-    // Hàm kích hoạt khi người chơi bấm vào Cube đang lơ lửng
     function triggerCubeClick(e) {
       if (e) {
         e.stopPropagation();
@@ -1380,7 +1846,6 @@
       setState('SPINNING_3D');
     }
 
-    // Gắn sự kiện cho cả nút Hitbox DOM lẫn Canvas để đảm bảo 100% bấm ăn ngay
     cubeClickTarget.addEventListener('pointerdown', triggerCubeClick);
     cubeClickTarget.addEventListener('click', triggerCubeClick);
     cubeClickTarget.addEventListener('keydown', (e) => {
@@ -1400,8 +1865,7 @@
       const centerY = cube.y + cube.hoverOffset + CUBE_SIZE * 0.5;
       const dist = Math.hypot(clickX - centerX, clickY - centerY);
 
-      // Hitbox rộng rãi bán kính 85px quanh tâm Cube
-      if (dist <= 85) {
+      if (dist <= 95) {
         triggerCubeClick(e);
       }
     });
@@ -1413,7 +1877,7 @@
 
     function openQuizModal() {
       setState('QUIZ_MODAL');
-      isAnswering = false; // Mở khóa hoàn toàn để người chơi chọn đáp án
+      isAnswering = false;
 
       const qData = quizQuestions[currentQuestionIndex];
       const qNumStr = String(currentQuestionIndex + 1).padStart(2, '0');
@@ -1428,7 +1892,6 @@
         btn.className = 'option-btn';
         btn.dataset.index = idx;
 
-        // Nếu đáp án này đã từng chọn sai trước khi hồi sinh -> vô hiệu hóa màu đỏ
         if (disabledOptions.has(idx)) {
           btn.classList.add('wrong-disabled');
           btn.disabled = true;
@@ -1469,7 +1932,6 @@
       isAnswering = true;
 
       if (selectedIndex === qData.correct) {
-        // CHỌN ĐÚNG
         targetBtn.classList.add('correct-glow');
         sound.playCorrect();
         energyScore += 150;
@@ -1482,7 +1944,6 @@
           setState('JUMP_DOWN');
         }, 520);
       } else {
-        // CHỌN SAI -> Đánh dấu nút sai, ẩn modal, Cube rơi thẳng xuống bãi gai và nổ vụn!
         disabledOptions.add(selectedIndex);
         targetBtn.classList.add('wrong-disabled', 'wrong-shake');
         targetBtn.disabled = true;
@@ -1498,8 +1959,13 @@
       }
     }
 
-    // Hỗ trợ bàn phím: 1, 2, 3, 4 hoặc A, B, C, D (và Space để click Cube khi đang lơ lửng)
     window.addEventListener('keydown', (e) => {
+      if (gameState === 'HOME' && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        startNewGameFromHome();
+        return;
+      }
+
       if (gameState === 'AWAITING_CLICK' && (e.key === ' ' || e.key === 'Enter')) {
         e.preventDefault();
         triggerCubeClick(e);
@@ -1546,7 +2012,7 @@
           rot: Math.random() * Math.PI * 2,
           vRot: (Math.random() - 0.5) * 14,
           color: colors[i % colors.length],
-          shape: i % 3 // 0: square, 1: triangle, 2: diamond
+          shape: i % 3
         });
       }
     }
@@ -1573,7 +2039,6 @@
       worldTime += dt;
       stateTimer += dt;
 
-      // Cập nhật hạt gió xoáy
       for (let i = windArcs.length - 1; i >= 0; i--) {
         const w = windArcs[i];
         w.angle += w.speed * dt;
@@ -1582,7 +2047,6 @@
         if (w.life <= 0) windArcs.splice(i, 1);
       }
 
-      // Cập nhật bụi dưới chân
       for (let i = dustParticles.length - 1; i >= 0; i--) {
         const p = dustParticles[i];
         p.x += p.vx * dt;
@@ -1591,20 +2055,26 @@
         if (p.life <= 0) dustParticles.splice(i, 1);
       }
 
-      // Xử lý từng trạng thái trong State Machine
       switch (gameState) {
+        case 'HOME': {
+          scrollWorld(dt, 220);
+          cube.y = groundY - CUBE_SIZE;
+          cube.hoverOffset = 0;
+          cube.rotation = Math.sin(worldTime * 14) * 0.045;
+          obstacle.x = canvas.width + 300;
+          break;
+        }
+
         case 'RUNNING': {
           scrollWorld(dt, currentSpeed);
           cube.y = groundY - CUBE_SIZE;
           cube.hoverOffset = 0;
-          // Nghiêng nhẹ sống động khi chạy trên mặt đất
           cube.rotation = Math.sin(worldTime * 18) * 0.055;
           cube.scaleX += (1 - cube.scaleX) * 12 * dt;
           cube.scaleY += (1 - cube.scaleY) * 12 * dt;
 
           obstacle.x -= currentSpeed * dt;
 
-          // Tạo hạt bụi neon dưới chân
           if (Math.random() < 0.65) {
             dustParticles.push({
               x: cube.x + 6,
@@ -1617,7 +2087,6 @@
             });
           }
 
-          // Tính toán khoảng cách tự động bật nhảy để đạt đỉnh (50% quãng đường) đúng ngay giữa bãi gai
           const halfSpan = JUMP_HORIZONTAL_SPAN * 0.5;
           const obstacleCenter = obstacle.x + obstacle.width * 0.5;
           const cubeCenter = cube.x + CUBE_SIZE * 0.5;
@@ -1643,24 +2112,21 @@
           cube.scaleY += (1 - cube.scaleY) * 10 * dt;
 
           if (cube.jumpProgress >= 0.5) {
-            // Đạt đúng 50% quãng đường nhảy (Đỉnh Parabol ngay phía trên bãi gai)
             cube.jumpProgress = 0.5;
             cube.y = groundY - CUBE_SIZE - JUMP_PEAK_HEIGHT;
             cube.rotation = Math.PI;
             obstacle.x = cube.x + CUBE_SIZE * 0.5 - obstacle.width * 0.5;
             setState('AWAITING_CLICK');
           } else {
-            // Quỹ đạo Parabol mượt mà: y = 4 * H * p * (1 - p)
             const p = cube.jumpProgress;
             const arcHeight = 4 * JUMP_PEAK_HEIGHT * p * (1 - p);
             cube.y = groundY - CUBE_SIZE - arcHeight;
-            cube.rotation = p * 2 * Math.PI; // Xoay từ 0 -> 180 độ khi p = 0.5
+            cube.rotation = p * 2 * Math.PI;
           }
           break;
         }
 
         case 'AWAITING_CLICK': {
-          // Thế giới dừng lại, Cube lơ lửng bồng bềnh nhẹ phía trên mũi gai
           cube.hoverOffset = Math.sin(worldTime * 5.5) * 4.5;
           syncDOMOverlaysToCube();
           break;
@@ -1682,7 +2148,6 @@
         }
 
         case 'FALL_FAIL': {
-          // Cube rơi tự do cắm thẳng xuống cụm gai nhọn bên dưới
           cube.hoverOffset = 0;
           cube.vy += 2400 * dt;
           cube.y += cube.vy * dt;
@@ -1703,7 +2168,6 @@
         }
 
         case 'SHATTER': {
-          // Các mảnh hạt hình học văng tứ tung trong 0.6s
           for (const s of shatterShards) {
             s.vy += 680 * dt;
             s.x += s.vx * dt;
@@ -1721,7 +2185,6 @@
         }
 
         case 'RESPAWN': {
-          // Thu hồi các mảnh hạt về lại vị trí lơ lửng phía trên bãi gai và mở lại bảng câu hỏi
           const t = Math.min(1, stateTimer / 0.42);
           const ease = 1 - Math.pow(1 - t, 3);
 
@@ -1737,14 +2200,12 @@
             cube.vy = 0;
             cube.rotation = Math.PI;
             shatterShards.length = 0;
-            // Mở lại bảng câu hỏi với các đáp án còn lại hoạt động 100%
             openQuizModal();
           }
           break;
         }
 
         case 'JUMP_DOWN': {
-          // Hoàn thành 50% quãng đường nhảy còn lại vượt qua bãi gai
           const jumpDuration = JUMP_HORIZONTAL_SPAN / currentSpeed;
           cube.jumpProgress += dt / jumpDuration;
           cube.hoverOffset = 0;
@@ -1756,11 +2217,9 @@
             cube.jumpProgress = 1;
             cube.y = groundY - CUBE_SIZE;
             cube.rotation = 0;
-            // Hiệu ứng tiếp đất đàn hồi (Squash & Stretch)
             cube.scaleX = 1.24;
             cube.scaleY = 0.78;
 
-            // Tung hạt sáng khi tiếp đất
             for (let i = 0; i < 14; i++) {
               dustParticles.push({
                 x: cube.x + CUBE_SIZE * 0.5,
@@ -1778,12 +2237,10 @@
             updateHUD();
 
             if (currentQuestionIndex >= quizQuestions.length) {
-              // Đã hoàn thành 10/10 câu -> Xuất hiện Cổng Dịch Chuyển Không Gian khổng lồ
               victoryPortal.active = true;
               victoryPortal.x = canvas.width + 180;
               setState('VICTORY_RUN');
             } else {
-              // Đặt cụm gai tiếp theo phía trước
               obstacle.x = canvas.width + 240;
               setState('RUNNING');
             }
@@ -1823,7 +2280,6 @@
         }
       }
 
-      // Cập nhật vệt sáng năng lượng (Light Trail) khi Cube hiển thị
       if (cube.visible && gameState !== 'SPINNING_3D') {
         cube.trail.unshift({
           x: cube.x,
@@ -1844,9 +2300,14 @@
       bgScrollMid = (bgScrollMid + speed * 0.35 * dt) % 80;
       bgScrollFar = (bgScrollFar + speed * 0.14 * dt) % 120;
 
-      // Dịch chuyển vệt sáng theo thế giới khi đang chạy/nhảy
       for (const t of cube.trail) {
-        if (gameState === 'RUNNING' || gameState === 'JUMP_UP' || gameState === 'JUMP_DOWN' || gameState === 'VICTORY_RUN') {
+        if (
+          gameState === 'HOME' ||
+          gameState === 'RUNNING' ||
+          gameState === 'JUMP_UP' ||
+          gameState === 'JUMP_DOWN' ||
+          gameState === 'VICTORY_RUN'
+        ) {
           t.x -= speed * dt * 0.55;
         }
         t.alpha *= 0.92;
@@ -1887,7 +2348,6 @@
     }
 
     function drawBackground() {
-      // 1. Lưới neon parallax phía xa
       ctx.save();
       ctx.strokeStyle = 'rgba(48, 246, 255, 0.08)';
       ctx.lineWidth = 1;
@@ -1907,7 +2367,6 @@
         ctx.stroke();
       }
 
-      // 2. Các ô vuông hình học trôi nổi
       for (const sq of bgSquares) {
         ctx.save();
         ctx.translate(sq.x + sq.size / 2, sq.y + sq.size / 2);
@@ -1929,7 +2388,6 @@
         ctx.translate(dec.x, dec.y + pulse);
 
         if (dec.type === 'PORTAL') {
-          // Cổng dịch chuyển Gravity Portal hồng/tím ở hậu cảnh
           ctx.shadowColor = '#ff63d8';
           ctx.shadowBlur = 18;
           ctx.strokeStyle = '#ff63d8';
@@ -1944,7 +2402,6 @@
           ctx.ellipse(0, 0, 11, 28, 0, 0, Math.PI * 2);
           ctx.stroke();
         } else if (dec.type === 'ORB') {
-          // Vòng tròn năng lượng Jump Ring / Orb
           ctx.shadowColor = '#30f6ff';
           ctx.shadowBlur = 14;
           ctx.strokeStyle = '#30f6ff';
@@ -1958,7 +2415,6 @@
           ctx.arc(0, 0, 7, 0, Math.PI * 2);
           ctx.fill();
         } else {
-          // Khối treo công nghệ trên cao
           ctx.shadowColor = '#30f6ff';
           ctx.shadowBlur = 10;
           ctx.fillStyle = 'rgba(5, 16, 48, 0.85)';
@@ -1975,14 +2431,12 @@
     function drawGround() {
       const groundHeight = canvas.height - groundY;
 
-      // Nền mặt đất tối
       const grad = ctx.createLinearGradient(0, groundY, 0, canvas.height);
       grad.addColorStop(0, '#071b52');
       grad.addColorStop(1, '#030a24');
       ctx.fillStyle = grad;
       ctx.fillRect(0, groundY, canvas.width, groundHeight);
 
-      // Hoa văn khối hộp chìm phía dưới
       ctx.save();
       const tileW = 64;
       const startX = -groundScroll;
@@ -1993,7 +2447,6 @@
         ctx.fillStyle = 'rgba(12, 66, 188, 0.22)';
         ctx.fillRect(x + 12, groundY + 20, tileW - 24, 26);
 
-        // Vạch kẻ xiên năng lượng ở mép trên mặt đất
         ctx.beginPath();
         ctx.strokeStyle = 'rgba(48, 246, 255, 0.45)';
         ctx.lineWidth = 2;
@@ -2003,7 +2456,6 @@
       }
       ctx.restore();
 
-      // Dải viền mặt đất phát sáng Cyan Neon (#30f6ff)
       ctx.save();
       ctx.shadowColor = '#30f6ff';
       ctx.shadowBlur = 18;
@@ -2017,7 +2469,6 @@
     }
 
     function drawObstacles() {
-      // Vẽ cụm 3 gai nhọn Neon Spikes
       ctx.save();
       for (let i = 0; i < obstacle.spikeCount; i++) {
         const sx = obstacle.x + i * SPIKE_WIDTH;
@@ -2043,7 +2494,6 @@
         ctx.fill();
         ctx.stroke();
 
-        // Lõi sáng bên trong gai
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -2063,7 +2513,6 @@
       ctx.save();
       ctx.translate(px, py);
 
-      // Hào quang xoay quanh cổng
       ctx.shadowColor = '#ff63d8';
       ctx.shadowBlur = 30;
       ctx.strokeStyle = '#ff63d8';
@@ -2086,7 +2535,6 @@
     }
 
     function drawCubeAndEffects() {
-      // Vẽ hạt bụi năng lượng
       for (const p of dustParticles) {
         ctx.save();
         ctx.globalAlpha = Math.max(0, p.life);
@@ -2097,10 +2545,8 @@
         ctx.restore();
       }
 
-      // Khi đang ở trạng thái SPINNING_3D, khối 3D CSS đảm nhận hiệu ứng xoay đa trục
       if (!cube.visible || gameState === 'SPINNING_3D') return;
 
-      // 1. Vẽ vệt sáng năng lượng dài (Light Trail)
       for (let i = cube.trail.length - 1; i >= 0; i--) {
         const t = cube.trail[i];
         const ratio = 1 - i / cube.trail.length;
@@ -2117,7 +2563,6 @@
       const cx = cube.x + CUBE_SIZE * 0.5;
       const cy = cube.y + cube.hoverOffset + CUBE_SIZE * 0.5;
 
-      // 2. Vòng tròn sóng xung kích (Click Ring) khi ở trạng thái AWAITING_CLICK
       if (gameState === 'AWAITING_CLICK') {
         const ringPulse = (worldTime * 1.8) % 1;
         ctx.save();
@@ -2136,7 +2581,6 @@
         ctx.restore();
       }
 
-      // 3. Vẽ Khối Vuông Geometry Dash (Cube Icon)
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(cube.rotation);
@@ -2144,7 +2588,6 @@
 
       const half = CUBE_SIZE * 0.5;
 
-      // Vỏ ngoài phát sáng xanh chanh (#baff3c)
       ctx.shadowColor = '#baff3c';
       ctx.shadowBlur = 18;
       ctx.fillStyle = '#09193a';
@@ -2153,20 +2596,17 @@
       ctx.fillRect(-half, -half, CUBE_SIZE, CUBE_SIZE);
       ctx.strokeRect(-half, -half, CUBE_SIZE, CUBE_SIZE);
 
-      // Viền công nghệ bên trong
       ctx.shadowBlur = 0;
       ctx.strokeStyle = 'rgba(48, 246, 255, 0.6)';
       ctx.lineWidth = 1.5;
       ctx.strokeRect(-half + 5, -half + 5, CUBE_SIZE - 10, CUBE_SIZE - 10);
 
-      // 2 Mắt hình khối phát sáng Cyan
       ctx.fillStyle = '#30f6ff';
       ctx.shadowColor = '#30f6ff';
       ctx.shadowBlur = 8;
       ctx.fillRect(-13, -11, 9, 9);
       ctx.fillRect(4, -11, 9, 9);
 
-      // Miệng công nghệ đặc trưng
       ctx.fillRect(-14, 5, 28, 7);
       ctx.fillStyle = '#09193a';
       ctx.fillRect(-6, 5, 3, 7);
@@ -2224,9 +2664,9 @@
     }
 
     /* =========================================================================
-       11. KHỞI ĐỘNG LẠI & VÒNG LẶP REQUESTANIMATIONFRAME
+       11. ĐIỀU KHIỂN TRANG CHỦ (HOME), START GAME & RESTART
        ========================================================================= */
-    function resetGame() {
+    function prepareRunVariables() {
       currentQuestionIndex = 0;
       energyScore = 1000;
       isAnswering = false;
@@ -2245,33 +2685,68 @@
       cube.hoverOffset = 0;
       cube.trail.length = 0;
 
-      obstacle.x = Math.max(680, canvas.width * 0.78);
+      obstacle.x = Math.max(660, canvas.width * 0.76);
       victoryPortal.active = false;
       shatterShards.length = 0;
       windArcs.length = 0;
 
       quizOverlay.classList.remove('active');
       winOverlay.classList.remove('active');
-
       updateHUD();
+    }
+
+    function showHomeScreen() {
+      prepareRunVariables();
+      homeOverlay.classList.remove('hidden');
+      setState('HOME');
+    }
+
+    function startNewGameFromHome() {
+      sound.playStartGame();
+      prepareRunVariables();
+      homeOverlay.classList.add('hidden');
+      spawnWindVortex(cube.x + CUBE_SIZE * 0.5, groundY - CUBE_SIZE * 0.5, 22);
       setState('RUNNING');
     }
 
-    restartGameBtn.addEventListener('click', () => {
-      sound.playJump();
-      resetGame();
-    });
-
-    soundToggleBtn.addEventListener('click', () => {
+    function toggleSoundState() {
       sound.enabled = !sound.enabled;
-      soundToggleBtn.textContent = sound.enabled ? '🔊 ÂM THANH: BẬT' : '🔇 ÂM THANH: TẮT';
+      const label = sound.enabled ? '🔊 ÂM THANH: BẬT' : '🔇 ÂM THANH: TẮT';
+      soundToggleBtn.textContent = label;
+      homeSoundBtn.textContent = label;
+    }
+
+    startGameBtn.addEventListener('click', startNewGameFromHome);
+    startGameBtn.addEventListener('mouseenter', () => sound.playHoverTick());
+    homeCubeIcon.addEventListener('click', () => {
+      sound.playJump();
+      spawnWindVortex(cube.x + CUBE_SIZE * 0.5, groundY - CUBE_SIZE * 0.5, 16);
     });
 
-    // Khởi chạy game
+    openHomeBtn.addEventListener('click', () => {
+      sound.playHoverTick();
+      showHomeScreen();
+    });
+
+    winToHomeBtn.addEventListener('click', () => {
+      sound.playHoverTick();
+      showHomeScreen();
+    });
+
+    restartGameBtn.addEventListener('click', () => {
+      sound.playStartGame();
+      prepareRunVariables();
+      homeOverlay.classList.add('hidden');
+      setState('RUNNING');
+    });
+
+    soundToggleBtn.addEventListener('click', toggleSoundState);
+    homeSoundBtn.addEventListener('click', toggleSoundState);
+
     let lastTimestamp = performance.now();
     initBackgroundElements();
     resizeCanvas();
-    resetGame();
+    showHomeScreen();
 
     function gameLoop(timestamp) {
       const dt = Math.min(0.05, Math.max(0.001, (timestamp - lastTimestamp) / 1000));
